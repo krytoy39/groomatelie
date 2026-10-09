@@ -1,0 +1,956 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Мокрый нос</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Unbounded:wght@500;700&display=swap">
+<style>
+/* Layout: multi-page salon site. Sticky bar with nav, "Личный кабинет" and "Записаться". Bright decorative blocks (cyan, coral, sun) sit on a muted blue-grey ground. Views switch through browser history so Back stays on the site. */
+:root {
+  --bg: #FEFDF9;
+  --wash: #EAE5F9;
+  --surface: #FFFFFF;
+  --ink: #24264A;
+  --muted: #4E5283;
+  --line: #DAD6EE;
+  --accent: #5B63B0;
+  --accent-ink: #FFFFFF;
+  --peri: #838BCC;
+  --bright: #A4C6E9;
+  --bright-ink: #24264A;
+  --coral: #B8AEE3;
+  --coral-ink: #2A2556;
+  --sun: #FADCFE;
+  --sun-ink: #4A2A55;
+  --mint: #C7F3F6;
+  --soft: #ECE9F9;
+  --hero-bg: linear-gradient(135deg, #B8AEE3 0%, #A4C6E9 55%, #C7F3F6 100%);
+  --hero-ink: #24264A;
+  --t1: #FADCFE;
+  --t2: #C7F3F6;
+  --t3: #DDD7F6;
+  --t4: #D3E3F5;
+  --ok: #14744A;
+  --ok-soft: #D3F0E2;
+  --bad: #B3261E;
+  --font-display: 'Unbounded', 'Trebuchet MS', sans-serif;
+  --font-body: 'Golos Text', 'Segoe UI', Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #14152B; --wash: #1E2050; --surface: #1D1F3D; --ink: #F1EFFC; --muted: #B0B4DA; --line: #363A70;
+    --accent: #A4AAEB; --accent-ink: #14152B; --peri: #B8AEE3; --bright: #A4C6E9; --bright-ink: #14152B;
+    --coral: #B8AEE3; --coral-ink: #1F1B45; --sun: #FADCFE; --sun-ink: #3A1F44; --mint: #C7F3F6; --soft: #2B2E5C;
+    --hero-bg: linear-gradient(135deg, #4B4690 0%, #3B5F8F 60%, #2F7480 100%); --hero-ink: #F1EFFC;
+    --t1: #4C3158; --t2: #1F4B55; --t3: #3A3672; --t4: #27456C;
+    --ok: #6FD39A; --ok-soft: #153A28; --bad: #FF8A80; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #14152B; --wash: #1E2050; --surface: #1D1F3D; --ink: #F1EFFC; --muted: #B0B4DA; --line: #363A70;
+  --accent: #A4AAEB; --accent-ink: #14152B; --peri: #B8AEE3; --bright: #A4C6E9; --bright-ink: #14152B;
+  --coral: #B8AEE3; --coral-ink: #1F1B45; --sun: #FADCFE; --sun-ink: #3A1F44; --mint: #C7F3F6; --soft: #2B2E5C;
+  --hero-bg: linear-gradient(135deg, #4B4690 0%, #3B5F8F 60%, #2F7480 100%); --hero-ink: #F1EFFC;
+  --t1: #4C3158; --t2: #1F4B55; --t3: #3A3672; --t4: #27456C;
+  --ok: #6FD39A; --ok-soft: #153A28; --bad: #FF8A80; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background-color: var(--bg);
+  background-image: linear-gradient(180deg, var(--wash) 0, var(--bg) 420px);
+  background-repeat: no-repeat;
+  color: var(--ink);
+  font-family: var(--font-body); font-size: 15px; line-height: 1.5;
+  padding-inline: 16px; padding-block: 12px 40px;
+}
+.shell { max-width: 1060px; margin-inline: auto; display: flex; flex-direction: column; gap: 18px; }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+h1, h2, h3, h4, p { margin: 0; }
+h2, h3 { text-wrap: balance; }
+h2 { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; letter-spacing: -0.01em; }
+h3 { font-family: var(--font-display); font-weight: 500; font-size: 1rem; }
+.lead { color: var(--muted); max-width: 62ch; }
+
+/* top bar */
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 10px 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.brand { display: flex; align-items: center; gap: 10px; border: 0; background: none; padding: 0; text-align: left; }
+.drop { width: 34px; height: 34px; flex: none; }
+.brand b { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; display: block; line-height: 1.15; }
+.brand small { color: var(--muted); font-size: 0.75rem; }
+.nav { display: flex; gap: 2px; flex: 1 1 320px; min-width: 0; overflow-x: auto; }
+.nav button { border: 0; background: none; padding: 7px 11px; border-radius: 9px; color: var(--muted); font-weight: 500; white-space: nowrap; }
+.nav button[aria-current="page"] { background: var(--soft); color: var(--ink); }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn { border: 0; background: var(--accent); color: var(--accent-ink); font-weight: 600; padding: 10px 16px; border-radius: 11px; }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn.coral { background: var(--coral); color: var(--coral-ink); }
+.btn.big { padding: 13px 22px; font-size: 1rem; }
+.ghost { border: 1.5px solid var(--line); background: transparent; border-radius: 11px; padding: 8px 14px; font-weight: 500; }
+.ghost.sm { padding: 5px 10px; font-size: 0.82rem; border-radius: 9px; }
+.ghost.light { border-color: currentColor; }
+.cab { display: inline-flex; align-items: center; gap: 8px; }
+.cab .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--sun); color: var(--sun-ink); display: inline-grid; place-items: center; font-size: 0.72rem; font-weight: 700; }
+.badge { background: var(--coral); color: var(--coral-ink); border-radius: 99px; font-size: 0.72rem; font-weight: 700; padding: 0 7px; min-width: 20px; text-align: center; }
+
+.crumbs { display: flex; align-items: center; gap: 12px; }
+.crumbs span { color: var(--muted); font-size: 0.85rem; }
+
+/* generic blocks */
+.view { display: flex; flex-direction: column; gap: 18px; }
+.view[hidden] { display: none; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+.row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.muted { color: var(--muted); }
+.small { font-size: 0.85rem; }
+.eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.72rem; font-weight: 600; }
+
+.hero { position: relative; isolation: isolate; overflow: hidden; cursor: crosshair; background: var(--hero-bg); color: var(--hero-ink); border-radius: 22px; padding: 34px 28px; display: flex; flex-direction: column; gap: 14px; }
+.hero::before { content: ""; position: absolute; z-index: -1; width: 230px; height: 230px; border-radius: 50%; background: var(--sun); right: -70px; top: -80px; }
+.hero::after { content: ""; position: absolute; z-index: -1; width: 110px; height: 110px; border-radius: 50%; background: var(--bg); right: 70px; bottom: -48px; opacity: 0.85; }
+.hero > * { position: relative; z-index: 1; max-width: 560px; }
+.hero > .fur { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; z-index: 0; pointer-events: none; }
+.hero .hint { opacity: 0.75; font-size: 0.82rem; }
+.hero h2 { font-size: clamp(1.6rem, 5vw, 2.4rem); line-height: 1.12; }
+.hero .btn { background: var(--ink); color: var(--surface); }
+.quick { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; background: var(--sun); color: var(--sun-ink); border-radius: 16px; padding: 16px 18px; }
+.quick b { font-family: var(--font-display); font-weight: 500; }
+.quick .btn { background: var(--sun-ink); color: var(--sun); }
+.promo { background: var(--coral); color: var(--coral-ink); border-radius: 16px; padding: 18px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.promo code { background: rgba(255, 255, 255, 0.55); border-radius: 8px; padding: 2px 8px; font-weight: 700; }
+.promo .btn { background: var(--coral-ink); color: var(--coral); }
+
+.feat h3 { display: flex; align-items: center; gap: 10px; }
+.ico { width: 34px; height: 34px; border-radius: 10px; display: inline-grid; place-items: center; flex: none; color: var(--bright-ink); font-weight: 700; }
+.i1 { background: var(--bright); } .i2 { background: var(--sun); color: var(--sun-ink); } .i3 { background: var(--mint); }
+
+.svc-card { border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 8px; border: 1px solid var(--line); min-width: 0; }
+.tone-t1 { background: var(--t1); } .tone-t2 { background: var(--t2); } .tone-t3 { background: var(--t3); } .tone-t4 { background: var(--t4); }
+.svc-card .meta { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; font-variant-numeric: tabular-nums; margin-top: auto; padding-top: 6px; }
+.svc-card .meta b { font-family: var(--font-display); font-weight: 500; font-size: 1.1rem; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip-btn { border: 1.5px solid var(--line); background: var(--surface); border-radius: 11px; padding: 8px 13px; text-align: left; min-width: 0; }
+.chip-btn small { display: block; color: var(--muted); font-size: 0.75rem; }
+.chip-btn[aria-pressed="true"] { border-color: var(--accent); background: var(--soft); }
+
+.table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.table td { padding: 8px 0; border-top: 1px solid var(--line); }
+.table td:last-child { text-align: right; font-weight: 600; }
+.scroll { overflow-x: auto; }
+
+.person { display: flex; gap: 14px; align-items: flex-start; }
+.ava { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-display); font-weight: 700; color: var(--bright-ink); flex: none; }
+.a0 { background: var(--bright); } .a1 { background: var(--sun); color: var(--sun-ink); } .a2 { background: var(--coral); color: var(--coral-ink); }
+.stars { color: var(--peri); letter-spacing: 2px; }
+.quote { display: flex; flex-direction: column; gap: 6px; }
+
+details { border-top: 1px solid var(--line); padding: 12px 0; }
+details:first-of-type { border-top: 0; }
+summary { cursor: pointer; font-weight: 600; }
+details p { margin-top: 8px; color: var(--muted); }
+
+/* booking */
+.grid { display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 18px; align-items: start; }
+.steps { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.step h3 { display: flex; align-items: center; gap: 10px; }
+.n { width: 26px; height: 26px; border-radius: 50%; background: var(--sun); color: var(--sun-ink); display: inline-grid; place-items: center; font-size: 0.8rem; font-weight: 700; flex: none; }
+.services { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.svc { text-align: left; border: 1.5px solid transparent; border-radius: 13px; padding: 13px; display: flex; flex-direction: column; gap: 5px; min-width: 0; color: var(--ink); }
+.svc[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent) inset; }
+.svc .d { color: var(--muted); font-size: 0.82rem; }
+.svc .meta { display: flex; justify-content: space-between; gap: 8px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.svc .meta i { font-style: normal; font-weight: 400; color: var(--muted); }
+.extras { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.extra { display: flex; align-items: center; gap: 9px; border: 1.5px solid var(--line); border-radius: 11px; padding: 9px 12px; }
+.extra input { width: 18px; height: 18px; accent-color: var(--accent); flex: none; }
+.extra span { flex: 1; min-width: 0; }
+.extra b { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+.days { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; }
+.day { flex: none; border: 1.5px solid var(--line); background: var(--surface); border-radius: 11px; padding: 8px 14px; text-align: center; min-width: 78px; }
+.day small { display: block; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.68rem; }
+.day[aria-pressed="true"] { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
+.day[aria-pressed="true"] small { color: inherit; opacity: 0.85; }
+.slots { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; }
+.slot { border: 1.5px solid var(--line); background: var(--surface); border-radius: 11px; padding: 9px 0; font-variant-numeric: tabular-nums; font-weight: 500; }
+.slot[aria-pressed="true"] { border-color: var(--accent); background: var(--accent); color: var(--accent-ink); }
+.slot:disabled { border-style: dashed; color: var(--muted); text-decoration: line-through; cursor: not-allowed; opacity: 0.65; }
+form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.field { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.field.wide { grid-column: 1 / -1; }
+.field label { font-size: 0.8rem; color: var(--muted); font-weight: 500; }
+.field input, .field select, .field textarea { border: 1.5px solid var(--line); background: var(--bg); border-radius: 10px; padding: 10px 12px; width: 100%; }
+.field textarea { min-height: 90px; resize: vertical; }
+.field [aria-invalid="true"] { border-color: var(--bad); }
+.err { color: var(--bad); font-size: 0.85rem; min-height: 1.2em; grid-column: 1 / -1; }
+.summary { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 84px); background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 18px; display: flex; flex-direction: column; gap: 12px; }
+.rows { display: flex; flex-direction: column; gap: 7px; margin: 0; }
+.rows div { display: flex; justify-content: space-between; gap: 12px; }
+.rows dt { color: var(--muted); }
+.rows dd { margin: 0; text-align: right; font-weight: 500; font-variant-numeric: tabular-nums; }
+.rows .total { border-top: 1px solid var(--line); padding-top: 9px; font-weight: 700; }
+.rows .pay dd { color: var(--accent); font-weight: 700; }
+.rows .minus dd { color: var(--ok); }
+.done { align-self: center; width: 100%; max-width: 540px; }
+.done h2 { font-size: 1.3rem; }
+.ticks { display: inline-flex; width: 46px; height: 46px; border-radius: 50%; background: var(--ok-soft); color: var(--ok); justify-content: center; align-items: center; }
+
+/* cabinet + owner */
+.pill { font-size: 0.75rem; font-weight: 600; padding: 3px 9px; border-radius: 99px; background: var(--ok-soft); color: var(--ok); white-space: nowrap; }
+.pill.ex { background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+.pill.pts { background: var(--sun); color: var(--sun-ink); }
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 16px; display: flex; flex-direction: column; gap: 2px; }
+.stat span { color: var(--muted); font-size: 0.82rem; }
+.stat b { font-family: var(--font-display); font-weight: 500; font-size: 1.3rem; font-variant-numeric: tabular-nums; }
+.daygroup { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.daygroup h3 { padding: 12px 16px; background: var(--soft); text-transform: capitalize; display: flex; justify-content: space-between; gap: 12px; font-size: 0.9rem; }
+.daygroup h3 span { color: var(--muted); font-family: var(--font-body); font-size: 0.8rem; text-transform: none; font-weight: 400; }
+.bk { display: grid; grid-template-columns: 110px minmax(0, 1fr) auto auto; gap: 12px; align-items: center; padding: 12px 16px; border-top: 1px solid var(--line); }
+.bk time { font-variant-numeric: tabular-nums; font-weight: 600; }
+.bk .who { min-width: 0; }
+.bk .who small { display: block; color: var(--muted); }
+.price { font-variant-numeric: tabular-nums; font-weight: 500; text-align: right; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+.empty { color: var(--muted); padding: 22px; text-align: center; }
+.pets { display: flex; flex-direction: column; gap: 8px; }
+.pet { display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+
+.foot { color: var(--muted); font-size: 0.8rem; text-align: center; display: flex; flex-direction: column; gap: 6px; align-items: center; }
+.toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); background: var(--ink); color: var(--surface); padding: 10px 16px; border-radius: 12px; font-size: 0.9rem; z-index: 10; max-width: calc(100% - 32px); }
+.toast[hidden] { display: none; }
+
+@media (max-width: 860px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .summary { position: static; }
+  .bk { grid-template-columns: minmax(0, 1fr) auto; }
+  .bk time { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  .services, .extras, form { grid-template-columns: minmax(0, 1fr); }
+  .hero { padding: 26px 18px; }
+  .hero::before { width: 150px; height: 150px; right: -60px; top: -60px; }
+  .hero::after { display: none; }
+}
+@media all {
+  .btn, .ghost, .chip-btn, .svc, .slot, .day, .nav button, .extra, .brand {
+    transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.22s ease, background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+  }
+  .btn:hover:not(:disabled), .ghost:hover, .chip-btn:hover, .svc:hover, .slot:hover:not(:disabled), .day:hover {
+    transform: translateY(-2px); box-shadow: 0 10px 20px -10px rgba(91, 99, 176, 0.65);
+  }
+  .nav button:hover { background: var(--soft); color: var(--ink); }
+  .brand:hover { transform: scale(1.03); }
+  .extra:hover { border-color: var(--accent); }
+  .btn:active:not(:disabled), .ghost:active, .chip-btn:active, .svc:active, .slot:active:not(:disabled), .day:active {
+    transform: translateY(0) scale(0.96); box-shadow: none; transition-duration: 0.08s;
+  }
+  .btn { position: relative; overflow: hidden; }
+  .btn::after { content: ""; position: absolute; inset: 0; pointer-events: none; transform: translateX(-130%); background: linear-gradient(105deg, transparent 30%, rgba(255, 255, 255, 0.4) 50%, transparent 70%); }
+  .btn:hover:not(:disabled)::after { transform: translateX(130%); transition: transform 0.8s ease; }
+  .hero .btn.big { animation: glow 2.8s ease-in-out infinite; }
+  @keyframes glow { 0%, 100% { box-shadow: 0 0 0 0 rgba(36, 38, 74, 0.35); } 55% { box-shadow: 0 0 0 11px rgba(36, 38, 74, 0); } }
+  .ripple { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.5); transform: scale(0); animation: ripple 0.65s ease-out forwards; pointer-events: none; }
+  @keyframes ripple { to { transform: scale(1); opacity: 0; } }
+  [aria-pressed="true"] { animation: pop 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.4); }
+  @keyframes pop { 0% { transform: scale(0.93); } 100% { transform: scale(1); } }
+  .view:not([hidden]) { animation: viewIn 0.4s ease both; }
+  @keyframes viewIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+}
+</style>
+
+<div class="shell">
+  <header class="bar">
+    <button class="brand" type="button" data-go="home" aria-label="Мокрый нос, на главную">
+      <svg class="drop" viewBox="0 0 40 40" aria-hidden="true"><path d="M20 3C14 12 7 18 7 25a13 13 0 0 0 26 0C33 18 26 12 20 3Z" fill="var(--bright)"/><circle cx="15.5" cy="25" r="2.1" fill="var(--bright-ink)"/><circle cx="24.5" cy="25" r="2.1" fill="var(--bright-ink)"/><path d="M16 30c2.5 2 5.5 2 8 0" stroke="var(--bright-ink)" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>
+      <span><b>Мокрый нос</b><small>Груминг-салон</small></span>
+    </button>
+    <nav class="nav" aria-label="Разделы сайта">
+      <button type="button" data-go="uslugi">Услуги</button>
+      <button type="button" data-go="mastera">Мастера</button>
+      <button type="button" data-go="info">Отзывы и вопросы</button>
+      <button type="button" data-go="kontakty">Контакты</button>
+    </nav>
+    <div class="actions">
+      <button type="button" class="ghost cab" id="cabBtn" data-go="kabinet"><span class="dot" id="cabDot" aria-hidden="true">●</span>Личный кабинет <span class="badge" id="cabCount" hidden>0</span></button>
+      <button type="button" class="btn" data-go="zapis">Записаться</button>
+    </div>
+  </header>
+
+  <div class="crumbs" id="crumbs" hidden>
+    <button type="button" class="ghost sm" id="backBtn">← Назад</button>
+    <span id="where"></span>
+  </div>
+
+  <main>
+    <section class="view" id="v-home" aria-label="Главная"></section>
+    <section class="view" id="v-uslugi" aria-label="Услуги" hidden></section>
+
+    <section class="view" id="v-zapis" aria-label="Запись" hidden>
+      <div class="grid" id="booking">
+        <div class="steps">
+          <section class="card step">
+            <h3><span class="n">1</span>Питомец и услуга</h3>
+            <div id="petPick"></div>
+            <div class="chips" id="sizes" role="group" aria-label="Размер питомца"></div>
+            <div class="services" id="services"></div>
+            <div class="extras" id="extras"></div>
+          </section>
+          <section class="card step">
+            <h3><span class="n">2</span>Мастер, дата и время</h3>
+            <div class="chips" id="masters" role="group" aria-label="Мастер"></div>
+            <div class="days" id="days"></div>
+            <div class="slots" id="slots"></div>
+            <p class="muted small" id="slotHint"></p>
+          </section>
+          <section class="card step">
+            <h3><span class="n">3</span>Контакты и оплата</h3>
+            <form id="form" novalidate>
+              <div class="field"><label for="f-name">Ваше имя</label><input id="f-name" autocomplete="name" placeholder="Например, Анна"></div>
+              <div class="field"><label for="f-phone">Телефон</label><input id="f-phone" type="tel" autocomplete="tel" placeholder="+7 900 000-00-00"></div>
+              <div class="field"><label for="f-dog">Кличка питомца</label><input id="f-dog" placeholder="Например, Бим"></div>
+              <div class="field"><label for="f-breed">Порода (по желанию)</label><input id="f-breed" placeholder="Например, йорк"></div>
+              <div class="field"><label for="f-promo">Промокод</label><input id="f-promo" placeholder="ПЕРВЫЙ" autocomplete="off"></div>
+              <div class="field" id="pointsBox"></div>
+              <p class="err" id="err" role="alert"></p>
+            </form>
+          </section>
+        </div>
+        <aside class="summary" id="summary" aria-live="polite"></aside>
+      </div>
+      <div class="card done" id="done" hidden></div>
+    </section>
+
+    <section class="view" id="v-mastera" aria-label="Мастера" hidden></section>
+    <section class="view" id="v-info" aria-label="Отзывы и вопросы" hidden></section>
+
+    <section class="view" id="v-kontakty" aria-label="Контакты" hidden>
+      <h2>Контакты</h2>
+      <div class="cols">
+        <div class="card">
+          <h3>Как нас найти</h3>
+          <p>ул. Липовая, 12, вход со двора</p>
+          <p class="muted">Пн–Сб, 10:00–19:00. Воскресенье выходной.</p>
+          <p>Телефон: +7 900 000-00-00</p>
+          <p class="muted small">Адрес и телефон вымышлены, это демо-страница.</p>
+        </div>
+        <form class="card" id="msgForm" novalidate style="display:flex">
+          <h3>Напишите нам</h3>
+          <div class="field"><label for="m-name">Имя</label><input id="m-name" placeholder="Как к вам обращаться"></div>
+          <div class="field"><label for="m-text">Сообщение</label><textarea id="m-text" placeholder="Например: можно ли привезти кота?"></textarea></div>
+          <p class="err" id="m-err" role="alert"></p>
+          <button type="button" class="btn" data-act="msg">Отправить</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="view" id="v-kabinet" aria-label="Личный кабинет" hidden></section>
+    <section class="view" id="v-vladelec" aria-label="Панель владельца" hidden></section>
+  </main>
+
+  <footer class="foot">
+    <p>Демо-версия. Имена, записи, адрес и отзывы вымышлены, оплата не подключена. Данные кабинета хранятся только в вашем браузере.</p>
+    <button type="button" class="ghost sm" data-go="vladelec">Показать панель владельца (демо)</button>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
+  var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var pad = function (n) { return String(n).padStart(2, '0'); };
+  var money = function (n) { return Math.round(n).toLocaleString('ru-RU') + ' ₽'; };
+  var hh = function (h) { return pad(h) + ':00'; };
+  var keyOf = function (d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); };
+  var fShort = new Intl.DateTimeFormat('ru-RU', { weekday: 'short', day: 'numeric', month: 'short' });
+  var fLong = new Intl.DateTimeFormat('ru-RU', { weekday: 'long', day: 'numeric', month: 'long' });
+
+  var OPEN = 10, CLOSE = 19, DEPOSIT = 0.2, CASHBACK = 0.05, POINTS_CAP = 0.3;
+  var SIZES = [
+    { id: 's', name: 'Малая', hint: 'до 10 кг', k: 1, extra: 0 },
+    { id: 'm', name: 'Средняя', hint: '10–25 кг', k: 1.3, extra: 0 },
+    { id: 'l', name: 'Крупная', hint: 'от 25 кг, +1 час', k: 1.7, extra: 1 }
+  ];
+  var SERVICES = [
+    { id: 'hyg', name: 'Гигиеническая стрижка', desc: 'Лапы, живот, зона вокруг глаз и хвоста', price: 2500, hours: 1, tone: 't1' },
+    { id: 'wash', name: 'Мытьё и сушка', desc: 'Шампунь по типу шерсти, кондиционер, сушка', price: 2000, hours: 1, tone: 't2' },
+    { id: 'full', name: 'Мытьё и полная стрижка', desc: 'Стрижка по стандарту породы или по вашему описанию', price: 4200, hours: 2, tone: 't3' },
+    { id: 'trim', name: 'Тримминг', desc: 'Для жёсткошёрстных пород: терьеры, шнауцеры', price: 5000, hours: 3, tone: 't4' }
+  ];
+  var EXTRAS = [
+    { id: 'ears', name: 'Чистка ушей', price: 300 },
+    { id: 'nails', name: 'Стрижка когтей', price: 400 },
+    { id: 'mask', name: 'SPA-маска для шерсти', price: 700 },
+    { id: 'flea', name: 'Обработка от блох', price: 500 }
+  ];
+  var MASTERS = [
+    { id: 'alina', name: 'Алина', role: 'Старший мастер', skills: 'Полная стрижка, креативный груминг, щенки', years: 8, rating: 4.9 },
+    { id: 'timur', name: 'Тимур', role: 'Мастер по крупным породам', skills: 'Тримминг, крупные и жёсткошёрстные породы', years: 6, rating: 4.8 },
+    { id: 'vera', name: 'Вера', role: 'Мастер малых пород', skills: 'Гигиена, мытьё, мелкие породы и пожилые питомцы', years: 4, rating: 4.9 }
+  ];
+  var PROMOS = { 'ПЕРВЫЙ': 0.1, 'ДРУГ': 0.05 };
+  var FAQ = [
+    ['Как отменить запись?', 'В личном кабинете нажмите «Отменить» рядом с записью. При отмене не позднее чем за сутки депозит возвращается полностью.'],
+    ['Зачем нужен депозит?', 'Депозит 20% закрепляет время за вами. Он входит в стоимость услуги, остаток вы оплачиваете в салоне.'],
+    ['Как работают баллы?', 'После каждого визита начисляется 5% от стоимости. Баллами можно оплатить до 30% следующей записи.'],
+    ['Берёте ли вы кошек?', 'В этой демо-версии салон работает только с собаками.'],
+    ['Что если питомец нервничает?', 'Расскажите об этом при записи. Мастер уделит больше времени, а при необходимости сделает перерыв.']
+  ];
+  var REVIEWS = [
+    { name: 'Анна К.', stars: 5, text: 'Бима привели в порядок за два часа, вышел как с выставки. Запись заняла минуту.' },
+    { name: 'Игорь М.', stars: 5, text: 'Нравится, что можно выбрать мастера и сразу увидеть цену с допами.' },
+    { name: 'Ольга С.', stars: 4, text: 'Хорошая стрижка, приятные цены. Хотелось бы больше окон по вечерам.' },
+    { name: 'Павел Н.', stars: 5, text: 'Тимур отлично справился с моим лабрадором. Теперь записываемся каждый месяц.' }
+  ];
+  var VIEWS = ['home', 'uslugi', 'zapis', 'mastera', 'info', 'kontakty', 'kabinet', 'vladelec'];
+  var LABELS = { home: 'Главная', uslugi: 'Услуги и цены', zapis: 'Онлайн-запись', mastera: 'Мастера', info: 'Отзывы и вопросы', kontakty: 'Контакты', kabinet: 'Личный кабинет', vladelec: 'Панель владельца' };
+
+  var svcBy = function (id) { return SERVICES.filter(function (s) { return s.id === id; })[0]; };
+  var sizeBy = function (id) { return SIZES.filter(function (s) { return s.id === id; })[0]; };
+  var masterBy = function (id) { return MASTERS.filter(function (m) { return m.id === id; })[0]; };
+
+  var days = [];
+  (function () {
+    var d = new Date(); d.setHours(12, 0, 0, 0);
+    while (days.length < 6) { d.setDate(d.getDate() + 1); if (d.getDay() !== 0) days.push({ key: keyOf(d), date: new Date(d) }); }
+  })();
+  var todayKey = keyOf(new Date());
+
+  var SEED = [
+    [0, 10, 'full', 'Анна К.', 'Бим', 'alina'], [0, 14, 'wash', 'Игорь М.', 'Рекс', 'vera'],
+    [1, 11, 'hyg', 'Ольга С.', 'Лаки', 'vera'], [1, 15, 'full', 'Дмитрий П.', 'Масяня', 'alina'],
+    [2, 10, 'wash', 'Мария Л.', 'Грета', 'timur'], [2, 12, 'hyg', 'Павел Н.', 'Джек', 'vera'], [2, 16, 'wash', 'Елена В.', 'Тоби', 'alina'],
+    [3, 13, 'trim', 'Сергей Т.', 'Арчи', 'timur'], [4, 10, 'full', 'Нина Ф.', 'Соня', 'alina'], [5, 11, 'hyg', 'Алексей Р.', 'Хуч', 'vera']
+  ];
+  var bookings = SEED.map(function (r, i) {
+    var s = svcBy(r[2]);
+    return { id: 'seed' + i, date: days[r[0]].key, start: r[1], hours: s.hours, service: s.name, price: s.price, deposit: Math.round(s.price * DEPOSIT),
+      owner: r[3], dog: r[4], master: r[5], example: true, mine: false, extras: [] };
+  });
+
+  var STORE = 'mokryj-nos-demo-v2';
+  var account = null, loggedIn = false, userReviews = [];
+  (function () {
+    try {
+      var raw = localStorage.getItem(STORE);
+      if (!raw) return;
+      var data = JSON.parse(raw);
+      account = data.account || null;
+      loggedIn = !!data.loggedIn && !!account;
+      userReviews = data.reviews || [];
+      (data.mine || []).forEach(function (b) { if (b.date >= todayKey) bookings.push(b); });
+    } catch (e) {}
+  })();
+  function save() {
+    try {
+      localStorage.setItem(STORE, JSON.stringify({ account: account, loggedIn: loggedIn, reviews: userReviews, mine: bookings.filter(function (b) { return b.mine; }) }));
+    } catch (e) {}
+  }
+
+  var sel = { size: 'm', service: 'full', extras: {}, master: 'any', day: days[0].key, slot: null, promo: '', usePoints: false };
+
+  /* availability */
+  function masterFree(mid, date, start, hours) {
+    for (var k = 0; k < hours; k++) {
+      var h = start + k;
+      if (h >= CLOSE) return false;
+      for (var i = 0; i < bookings.length; i++) {
+        var b = bookings[i];
+        if (b.master === mid && b.date === date && h >= b.start && h < b.start + b.hours) return false;
+      }
+    }
+    return true;
+  }
+  function freeMasters(date, start, hours, pref) {
+    var ids = pref && pref !== 'any' ? [pref] : MASTERS.map(function (m) { return m.id; });
+    return ids.filter(function (id) { return masterFree(id, date, start, hours); });
+  }
+  function calc() {
+    var s = svcBy(sel.service), z = sizeBy(sel.size);
+    var base = Math.round(s.price * z.k / 50) * 50, ex = 0, names = [];
+    EXTRAS.forEach(function (e) { if (sel.extras[e.id]) { ex += e.price; names.push(e.name); } });
+    var sub = base + ex;
+    var rate = PROMOS[sel.promo.trim().toUpperCase()] || 0;
+    var disc = Math.round(sub * rate);
+    var pts = 0;
+    if (sel.usePoints && account && loggedIn) pts = Math.min(account.points, Math.round((sub - disc) * POINTS_CAP));
+    var total = sub - disc - pts;
+    return { svc: s, size: z, base: base, ex: ex, names: names, sub: sub, rate: rate, disc: disc, pts: pts, total: total, dep: Math.round(total * DEPOSIT), hours: s.hours + z.extra };
+  }
+  function fixSlot() {
+    if (sel.slot !== null && !freeMasters(sel.day, sel.slot, calc().hours, sel.master).length) sel.slot = null;
+  }
+  function toast(msg) {
+    var t = $('#toast'); t.textContent = msg; t.hidden = false;
+    clearTimeout(toast.t); toast.t = setTimeout(function () { t.hidden = true; }, 3200);
+  }
+
+  /* ---------- routing: history keeps the visitor on the site ---------- */
+  var cur = 'home', histOk = false, trail = [];
+  function fromHash() {
+    var h = (location.hash || '').replace('#', '');
+    return VIEWS.indexOf(h) > -1 ? h : 'home';
+  }
+  function go(name) {
+    if (VIEWS.indexOf(name) < 0) name = 'home';
+    if (name !== cur) {
+      try { history.pushState({ v: name }, '', '#' + name); histOk = true; }
+      catch (e) { histOk = false; trail.push(cur); }
+    }
+    show(name);
+  }
+  function back() {
+    if (cur === 'home') return;
+    if (histOk) { try { history.back(); return; } catch (e) {} }
+    show(trail.pop() || 'home');
+  }
+  window.addEventListener('popstate', function (e) {
+    var st = e.state;
+    if (st && st.guard) {
+      try { history.pushState({ v: 'home' }, '', '#home'); } catch (x) {}
+      show('home');
+      if (cur === 'home') toast('Вы на главной странице нашего сайта');
+      return;
+    }
+    show(st && st.v ? st.v : fromHash());
+  });
+  window.addEventListener('hashchange', function () { var v = fromHash(); if (v !== cur) show(v); });
+
+  function show(name) {
+    if (VIEWS.indexOf(name) < 0) name = 'home';
+    cur = name;
+    VIEWS.forEach(function (v) { $('#v-' + v).hidden = (v !== name); });
+    document.querySelectorAll('.nav button').forEach(function (b) { b.removeAttribute('aria-current'); if (b.dataset.go === name) b.setAttribute('aria-current', 'page'); });
+    $('#cabBtn').toggleAttribute('data-here', name === 'kabinet');
+    $('#crumbs').hidden = (name === 'home');
+    $('#where').textContent = LABELS[name];
+    var r = { home: renderHome, uslugi: renderUslugi, zapis: renderZapis, mastera: renderMasters, info: renderInfo, kabinet: renderCabinet, vladelec: renderOwner }[name];
+    if (r) r();
+    renderChrome();
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+  function renderChrome() {
+    var mine = bookings.filter(function (b) { return b.mine; }).length;
+    var c = $('#cabCount'); c.textContent = mine; c.hidden = !mine;
+    $('#cabDot').textContent = loggedIn && account ? account.name.charAt(0).toUpperCase() : '●';
+  }
+
+  /* ---------- home ---------- */
+  function nextWindow() {
+    var s = svcBy('full'), h = s.hours;
+    for (var i = 0; i < days.length; i++) for (var t = OPEN; t < CLOSE; t++) {
+      var f = freeMasters(days[i].key, t, h, 'any');
+      if (f.length) return { d: days[i], t: t, m: f[0], s: s };
+    }
+    return null;
+  }
+  function reviewCard(r) {
+    return '<div class="card quote"><div class="stars" aria-label="Оценка ' + r.stars + ' из 5">' + '★'.repeat(r.stars) + '☆'.repeat(5 - r.stars) + '</div><p>' + esc(r.text) + '</p><p class="muted small">' + esc(r.name) + '</p></div>';
+  }
+  function allReviews() { return userReviews.concat(REVIEWS); }
+  function renderHome() {
+    var w = nextWindow();
+    var html = '<section class="hero"><p class="eyebrow">Груминг-салон · Пн–Сб, 10:00–19:00</p><h2>Чистый, пушистый и довольный</h2>' +
+      '<p>Выберите услугу, мастера и время. Запись занимает минуту, депозит 20% входит в стоимость, а накануне придёт напоминание.</p>' +
+      '<div class="row"><button type="button" class="btn big" data-go="zapis">Записаться онлайн</button><button type="button" class="ghost light" data-go="uslugi">Услуги и цены</button></div><p class="hint">Проведите курсором или пальцем по баннеру</p></section>';
+    if (w) html += '<div class="quick"><div><p class="eyebrow">Ближайшее свободное окно</p><b>' + esc(fLong.format(w.d.date)) + ', ' + hh(w.t) + '</b><p class="small">' + esc(w.s.name) + ' · мастер ' + esc(masterBy(w.m).name) + '</p></div>' +
+      '<button type="button" class="btn" data-quick="' + w.d.key + '|' + w.t + '|' + w.m + '">Занять это время</button></div>';
+    html += '<div class="cols">' +
+      '<div class="card feat"><h3><span class="ico i1">24</span>Запись без звонков</h3><p class="muted">Выбирайте время ночью или в метро. Занятые окна не показываются.</p></div>' +
+      '<div class="card feat"><h3><span class="ico i2">%</span>Депозит возвращается</h3><p class="muted">Отмена за сутки возвращает депозит полностью. Он входит в цену услуги.</p></div>' +
+      '<div class="card feat"><h3><span class="ico i3">+5</span>Баллы за визиты</h3><p class="muted">5% от каждого визита копятся в личном кабинете и оплачивают до 30% следующей записи.</p></div></div>';
+    html += '<h3>Популярные услуги</h3><div class="cols">' + SERVICES.slice(0, 3).map(function (s) {
+      return '<div class="svc-card tone-' + s.tone + '"><b>' + esc(s.name) + '</b><span class="muted small">' + esc(s.desc) + '</span><div class="meta"><b>от ' + money(s.price) + '</b><button type="button" class="ghost sm" data-pick="' + s.id + '">Выбрать</button></div></div>';
+    }).join('') + '</div>';
+    html += '<div class="promo"><div><b>Первый визит со скидкой 10%</b><p class="small">Промокод <code>ПЕРВЫЙ</code> применяется при записи.</p></div><button type="button" class="btn" data-promo="ПЕРВЫЙ">Записаться по промокоду</button></div>';
+    html += '<h3>Что говорят клиенты</h3><div class="cols">' + allReviews().slice(0, 2).map(reviewCard).join('') + '</div>';
+    $('#v-home').innerHTML = html;
+    furInit($('#v-home .hero'));
+  }
+
+  /* ---------- services ---------- */
+  function renderUslugi() {
+    var z = sizeBy(sel.size);
+    $('#v-uslugi').innerHTML = '<div><h2>Услуги и цены</h2><p class="lead">Цена зависит от размера питомца. Выберите размер, и все цены пересчитаются.</p></div>' +
+      '<div class="chips" role="group" aria-label="Размер питомца">' + SIZES.map(function (s) {
+        return '<button type="button" class="chip-btn" data-size="' + s.id + '" aria-pressed="' + (s.id === sel.size) + '">' + esc(s.name) + '<small>' + esc(s.hint) + '</small></button>';
+      }).join('') + '</div>' +
+      '<div class="cols">' + SERVICES.map(function (s) {
+        var price = Math.round(s.price * z.k / 50) * 50;
+        return '<div class="svc-card tone-' + s.tone + '"><b>' + esc(s.name) + '</b><span class="muted small">' + esc(s.desc) + '</span>' +
+          '<div class="meta"><b>' + money(price) + '</b><span class="muted small">' + (s.hours + z.extra) + ' ч</span></div><button type="button" class="btn" data-pick="' + s.id + '">Записаться</button></div>';
+      }).join('') + '</div>' +
+      '<div class="card"><h3>Дополнительные услуги</h3><p class="muted small">Добавляются к любой услуге при записи.</p><div class="scroll"><table class="table"><tbody>' +
+      EXTRAS.map(function (e) { return '<tr><td>' + esc(e.name) + '</td><td>' + money(e.price) + '</td></tr>'; }).join('') + '</tbody></table></div></div>';
+  }
+
+  /* ---------- masters ---------- */
+  function renderMasters() {
+    $('#v-mastera').innerHTML = '<div><h2>Мастера</h2><p class="lead">Выберите мастера при записи или оставьте «любой свободный».</p></div><div class="cols">' +
+      MASTERS.map(function (m, i) {
+        return '<div class="card"><div class="person"><div class="ava a' + (i % 3) + '" aria-hidden="true">' + esc(m.name.charAt(0)) + '</div><div><h3>' + esc(m.name) + '</h3><p class="muted small">' + esc(m.role) + '</p></div></div>' +
+          '<p>' + esc(m.skills) + '</p><p class="muted small">Стаж ' + m.years + ' лет · рейтинг ' + m.rating.toFixed(1).replace('.', ',') + ' <span class="stars">★</span></p>' +
+          '<button type="button" class="btn" data-pickmaster="' + m.id + '">Записаться к мастеру</button></div>';
+      }).join('') + '</div>';
+  }
+
+  /* ---------- reviews and FAQ ---------- */
+  function renderInfo() {
+    var list = allReviews();
+    var avg = list.reduce(function (a, r) { return a + r.stars; }, 0) / list.length;
+    $('#v-info').innerHTML = '<div><h2>Отзывы и вопросы</h2><p class="lead">Средняя оценка ' + avg.toFixed(1).replace('.', ',') + ' на основе ' + list.length + ' отзывов.</p></div>' +
+      '<div class="cols">' + list.map(reviewCard).join('') + '</div>' +
+      '<form class="card" id="revForm" novalidate style="display:flex"><h3>Оставить отзыв</h3>' +
+      '<div class="field"><label for="r-name">Имя</label><input id="r-name" placeholder="Как вас подписать"></div>' +
+      '<div class="field"><label for="r-stars">Оценка</label><select id="r-stars"><option value="5">5 — отлично</option><option value="4">4 — хорошо</option><option value="3">3 — нормально</option><option value="2">2 — плохо</option><option value="1">1 — очень плохо</option></select></div>' +
+      '<div class="field"><label for="r-text">Отзыв</label><textarea id="r-text" placeholder="Что понравилось или что улучшить"></textarea></div>' +
+      '<p class="err" id="r-err" role="alert"></p><button type="button" class="btn" data-act="review">Опубликовать</button></form>' +
+      '<div class="card"><h3>Частые вопросы</h3>' + FAQ.map(function (q) { return '<details><summary>' + esc(q[0]) + '</summary><p>' + esc(q[1]) + '</p></details>'; }).join('') + '</div>';
+  }
+
+  /* ---------- booking ---------- */
+  function rPets() {
+    var el = $('#petPick');
+    if (!(loggedIn && account && account.pets.length)) { el.innerHTML = ''; return; }
+    el.innerHTML = '<p class="muted small">Ваши питомцы</p><div class="chips">' + account.pets.map(function (p, i) {
+      return '<button type="button" class="chip-btn" data-pet="' + i + '">' + esc(p.name) + '<small>' + esc(p.breed || 'порода не указана') + '</small></button>';
+    }).join('') + '</div>';
+  }
+  function rSizes() {
+    $('#sizes').innerHTML = SIZES.map(function (s) {
+      return '<button type="button" class="chip-btn" data-size="' + s.id + '" aria-pressed="' + (s.id === sel.size) + '">' + esc(s.name) + '<small>' + esc(s.hint) + '</small></button>';
+    }).join('');
+    $('#services').innerHTML = SERVICES.map(function (s) {
+      var price = Math.round(s.price * sizeBy(sel.size).k / 50) * 50;
+      return '<button type="button" class="svc tone-' + s.tone + '" data-svc="' + s.id + '" aria-pressed="' + (sel.service === s.id) + '"><b>' + esc(s.name) + '</b><span class="d">' + esc(s.desc) + '</span><span class="meta"><span>' + money(price) + '</span><i>' + (s.hours + sizeBy(sel.size).extra) + ' ч</i></span></button>';
+    }).join('');
+    $('#extras').innerHTML = EXTRAS.map(function (e) {
+      return '<label class="extra"><input type="checkbox" data-extra="' + e.id + '"' + (sel.extras[e.id] ? ' checked' : '') + '><span>' + esc(e.name) + '</span><b>+' + money(e.price) + '</b></label>';
+    }).join('');
+  }
+  function rMasters() {
+    var all = [{ id: 'any', name: 'Любой свободный', role: 'Быстрее найдём окно' }].concat(MASTERS);
+    $('#masters').innerHTML = all.map(function (m) {
+      return '<button type="button" class="chip-btn" data-master="' + m.id + '" aria-pressed="' + (sel.master === m.id) + '">' + esc(m.name) + '<small>' + esc(m.role) + '</small></button>';
+    }).join('');
+  }
+  function rDays() {
+    $('#days').innerHTML = days.map(function (d) {
+      var p = fShort.format(d.date).replace(',', '').split(' ');
+      return '<button type="button" class="day" data-day="' + d.key + '" aria-pressed="' + (sel.day === d.key) + '"><small>' + esc(p[0]) + '</small>' + esc(p.slice(1).join(' ')) + '</button>';
+    }).join('');
+  }
+  function rSlots() {
+    var c = calc(), free = 0, out = '';
+    for (var h = OPEN; h < CLOSE; h++) {
+      var ok = freeMasters(sel.day, h, c.hours, sel.master).length > 0;
+      if (ok) free++;
+      out += '<button type="button" class="slot" data-slot="' + h + '"' + (ok ? '' : ' disabled') + ' aria-pressed="' + (sel.slot === h) + '">' + hh(h) + '</button>';
+    }
+    $('#slots').innerHTML = out;
+    $('#slotHint').textContent = free ? 'Свободных окон: ' + free + '. Услуга занимает ' + c.hours + ' ч, время показано с учётом этого.' : 'На этот день нет свободных окон. Выберите другую дату или мастера.';
+  }
+  function rPoints() {
+    var el = $('#pointsBox');
+    if (loggedIn && account && account.points > 0) {
+      el.innerHTML = '<label>Баллы</label><label class="extra"><input type="checkbox" id="f-points"' + (sel.usePoints ? ' checked' : '') + '><span>Списать баллы (есть ' + account.points + ')</span></label>';
+    } else {
+      el.innerHTML = '<label>Баллы</label><p class="muted small">Войдите в личный кабинет, чтобы копить и тратить баллы.</p>';
+    }
+  }
+  function rSummary() {
+    var c = calc(), d = days.filter(function (x) { return x.key === sel.day; })[0];
+    var m = sel.master === 'any' ? 'любой свободный' : masterBy(sel.master).name;
+    var promoNote = sel.promo.trim() && !c.rate ? '<p class="small" style="color:var(--bad)">Такого промокода нет. Попробуйте ПЕРВЫЙ.</p>' : '';
+    $('#summary').innerHTML = '<h3>Ваша запись</h3><dl class="rows">' +
+      '<div><dt>Услуга</dt><dd>' + esc(c.svc.name) + '</dd></div>' +
+      '<div><dt>Питомец</dt><dd>' + esc(c.size.name.toLowerCase()) + ' порода</dd></div>' +
+      (c.names.length ? '<div><dt>Допы</dt><dd>' + esc(c.names.join(', ')) + '</dd></div>' : '') +
+      '<div><dt>Мастер</dt><dd>' + esc(m) + '</dd></div>' +
+      '<div><dt>Дата</dt><dd>' + esc(fLong.format(d.date)) + '</dd></div>' +
+      '<div><dt>Время</dt><dd>' + (sel.slot === null ? 'не выбрано' : hh(sel.slot) + '–' + hh(sel.slot + c.hours)) + '</dd></div>' +
+      '<div class="total"><dt>Стоимость</dt><dd>' + money(c.sub) + '</dd></div>' +
+      (c.disc ? '<div class="minus"><dt>Промокод −' + Math.round(c.rate * 100) + '%</dt><dd>−' + money(c.disc) + '</dd></div>' : '') +
+      (c.pts ? '<div class="minus"><dt>Баллы</dt><dd>−' + money(c.pts) + '</dd></div>' : '') +
+      '<div class="total"><dt>Итого</dt><dd>' + money(c.total) + '</dd></div>' +
+      '<div class="pay"><dt>Депозит сейчас (20%)</dt><dd>' + money(c.dep) + '</dd></div></dl>' + promoNote +
+      '<button type="button" class="btn" data-act="book"' + (sel.slot === null ? ' disabled' : '') + '>Записаться и внести депозит</button>' +
+      '<p class="muted small">Остаток оплачивается в салоне. Депозит возвращается при отмене за сутки. После визита начислим ' + money(c.total * CASHBACK) + ' баллами.</p>';
+  }
+  function renderZapis() {
+    $('#done').hidden = true; $('#booking').hidden = false;
+    if (account && loggedIn) {
+      if (!$('#f-name').value) $('#f-name').value = account.name;
+      if (!$('#f-phone').value) $('#f-phone').value = account.contact;
+    }
+    $('#f-promo').value = sel.promo;
+    fixSlot(); rPets(); rSizes(); rMasters(); rDays(); rSlots(); rPoints(); rSummary();
+  }
+  function book() {
+    var name = $('#f-name').value.trim(), phone = $('#f-phone').value.trim(), dog = $('#f-dog').value.trim(), breed = $('#f-breed').value.trim();
+    var ids = ['f-name', 'f-phone', 'f-dog'], bad = [];
+    if (!name) bad.push('f-name');
+    if (phone.replace(/\D/g, '').length < 7) bad.push('f-phone');
+    if (!dog) bad.push('f-dog');
+    ids.forEach(function (id) { $('#' + id).setAttribute('aria-invalid', bad.indexOf(id) > -1 ? 'true' : 'false'); });
+    if (bad.length) { $('#err').textContent = 'Заполните имя, телефон (минимум 7 цифр) и кличку питомца.'; $('#' + bad[0]).focus(); return; }
+    var c = calc(), free = sel.slot === null ? [] : freeMasters(sel.day, sel.slot, c.hours, sel.master);
+    if (!free.length) { $('#err').textContent = 'Это время уже занято. Выберите другое.'; sel.slot = null; rSlots(); rSummary(); return; }
+    $('#err').textContent = '';
+    var b = { id: 'b' + Date.now(), date: sel.day, start: sel.slot, hours: c.hours, service: c.svc.name, price: c.total, deposit: c.dep,
+      owner: name, dog: dog, master: free[0], extras: c.names, example: false, mine: true, contact: phone };
+    bookings.push(b);
+    if (account && loggedIn) {
+      account.points = account.points - c.pts + Math.round(c.total * CASHBACK);
+      if (!account.pets.some(function (p) { return p.name.toLowerCase() === dog.toLowerCase(); })) account.pets.push({ name: dog, breed: breed, size: sel.size });
+    }
+    save();
+    $('#booking').hidden = true;
+    var done = $('#done'), d = days.filter(function (x) { return x.key === b.date; })[0];
+    done.hidden = false;
+    done.innerHTML = '<span class="ticks" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>' +
+      '<h2>' + esc(dog) + ' записан</h2><dl class="rows"><div><dt>Услуга</dt><dd>' + esc(b.service) + '</dd></div>' +
+      '<div><dt>Когда</dt><dd>' + esc(fLong.format(d.date)) + ', ' + hh(b.start) + '–' + hh(b.start + b.hours) + '</dd></div>' +
+      '<div><dt>Мастер</dt><dd>' + esc(masterBy(b.master).name) + '</dd></div>' +
+      '<div class="pay"><dt>Депозит</dt><dd>' + money(b.deposit) + '</dd></div></dl>' +
+      '<p class="muted small">В реальной версии здесь придёт сообщение с подтверждением и напоминанием за день до визита.' + (loggedIn ? ' Запись уже в вашем кабинете.' : ' Создайте личный кабинет, чтобы управлять записями и копить баллы.') + '</p>' +
+      '<div class="row"><button type="button" class="btn" data-go="kabinet">' + (loggedIn ? 'Мои записи' : 'Личный кабинет') + '</button><button type="button" class="ghost" data-act="again">Записать ещё питомца</button></div>';
+    sel.slot = null; sel.extras = {}; sel.usePoints = false; sel.promo = '';
+    renderChrome();
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+
+  /* ---------- cabinet ---------- */
+  function petsHtml() {
+    if (!account.pets.length) return '<p class="muted">Питомцев пока нет. Добавьте первого или запишитесь, и мы сохраним его автоматически.</p>';
+    return '<div class="pets">' + account.pets.map(function (p, i) {
+      return '<div class="pet"><span><b>' + esc(p.name) + '</b> <span class="muted small">' + esc(p.breed || 'порода не указана') + ' · ' + esc(sizeBy(p.size).name.toLowerCase()) + '</span></span><button type="button" class="ghost sm" data-delpet="' + i + '">Удалить</button></div>';
+    }).join('') + '</div>';
+  }
+  function renderCabinet() {
+    var el = $('#v-kabinet');
+    if (!(loggedIn && account)) {
+      el.innerHTML = '<div><h2>Личный кабинет</h2><p class="lead">Записи, питомцы и бонусные баллы в одном месте. Пароль не нужен, это демо.</p></div>' +
+        '<form class="card" id="loginForm" novalidate style="display:flex;max-width:460px"><h3>Войти или создать кабинет</h3>' +
+        '<div class="field"><label for="c-name">Имя</label><input id="c-name" autocomplete="name" placeholder="Например, Анна" value="' + esc(account ? account.name : '') + '"></div>' +
+        '<div class="field"><label for="c-contact">Телефон или почта</label><input id="c-contact" autocomplete="username" placeholder="+7 900 000-00-00" value="' + esc(account ? account.contact : '') + '"></div>' +
+        '<p class="err" id="c-err" role="alert"></p><button type="button" class="btn" data-act="login">Войти</button>' +
+        '<p class="muted small">При создании кабинета начислим 200 приветственных баллов.</p></form>';
+      return;
+    }
+    var mine = bookings.filter(function (b) { return b.mine; }).sort(function (a, b) { return a.date === b.date ? a.start - b.start : (a.date < b.date ? -1 : 1); });
+    var list = mine.length ? mine.map(function (b) {
+      var d = days.filter(function (x) { return x.key === b.date; })[0];
+      var when = d ? fLong.format(d.date) : b.date;
+      return '<div class="bk"><time>' + hh(b.start) + '–' + hh(b.start + b.hours) + '</time><div class="who"><b>' + esc(b.dog) + '</b><small>' + esc(when) + ' · ' + esc(b.service) + ' · ' + esc(masterBy(b.master).name) + '</small></div>' +
+        '<div class="price">' + money(b.price) + '</div><div class="row"><button type="button" class="ghost sm" data-repeat="' + esc(b.id) + '">Повторить</button><button type="button" class="ghost sm" data-cancel="' + esc(b.id) + '">Отменить</button></div></div>';
+    }).join('') : '<p class="empty">Записей пока нет. Нажмите «Записаться», и она появится здесь.</p>';
+    el.innerHTML = '<div class="row" style="justify-content:space-between"><div class="person"><div class="ava a1" aria-hidden="true">' + esc(account.name.charAt(0).toUpperCase()) + '</div><div><h2>' + esc(account.name) + '</h2><p class="muted small">' + esc(account.contact) + '</p></div></div>' +
+      '<div class="row"><span class="pill pts">' + account.points + ' баллов</span><button type="button" class="ghost sm" data-act="logout">Выйти</button></div></div>' +
+      '<div class="daygroup"><h3>Мои записи<span>' + mine.length + '</span></h3>' + list + '</div>' +
+      '<div class="cols"><div class="card"><h3>Мои питомцы</h3>' + petsHtml() +
+      '<form id="petForm" novalidate style="display:grid"><div class="field"><label for="p-name">Кличка</label><input id="p-name" placeholder="Например, Рекс"></div>' +
+      '<div class="field"><label for="p-breed">Порода</label><input id="p-breed" placeholder="Например, шнауцер"></div>' +
+      '<div class="field"><label for="p-size">Размер</label><select id="p-size">' + SIZES.map(function (s) { return '<option value="' + s.id + '">' + esc(s.name) + ' (' + esc(s.hint) + ')</option>'; }).join('') + '</select></div>' +
+      '<p class="err" id="p-err" role="alert"></p><button type="button" class="btn" data-act="addpet">Добавить питомца</button></form></div>' +
+      '<div class="card"><h3>Бонусы</h3><p class="muted">После каждой записи начисляется 5% от стоимости. Баллами можно оплатить до 30% следующей записи, 1 балл равен 1 рублю.</p><p><b>' + money(account.points) + '</b> на счёте</p><button type="button" class="btn coral" data-go="zapis">Потратить на запись</button></div></div>';
+  }
+
+  /* ---------- owner ---------- */
+  function renderOwner() {
+    var list = bookings.slice().sort(function (a, b) { return a.date === b.date ? a.start - b.start : (a.date < b.date ? -1 : 1); });
+    var rev = 0, dep = 0;
+    list.forEach(function (b) { rev += b.price; dep += b.deposit; });
+    var html = '<div><h2>Панель владельца</h2><p class="lead">Так выглядит расписание для владельца салона. Новые записи клиентов появляются здесь сразу.</p></div>' +
+      '<div class="stats"><div class="stat"><span>Записей на неделю</span><b>' + list.length + '</b></div><div class="stat"><span>Выручка по записям</span><b>' + money(rev) + '</b></div><div class="stat"><span>Депозиты получены</span><b>' + money(dep) + '</b></div></div>';
+    if (!list.length) html += '<div class="daygroup"><p class="empty">Записей пока нет.</p></div>';
+    days.forEach(function (d) {
+      var items = list.filter(function (b) { return b.date === d.key; });
+      if (!items.length) return;
+      var sum = items.reduce(function (a, b) { return a + b.price; }, 0);
+      html += '<section class="daygroup"><h3>' + esc(fLong.format(d.date)) + '<span>' + items.length + ' зап. · ' + money(sum) + '</span></h3>';
+      items.forEach(function (b) {
+        html += '<div class="bk"><time>' + hh(b.start) + '–' + hh(b.start + b.hours) + '</time><div class="who"><b>' + esc(b.dog) + '</b><small>' + esc(b.owner) + ' · ' + esc(b.service) + ' · ' + esc(masterBy(b.master).name) + '</small></div>' +
+          '<div><span class="pill' + (b.example ? ' ex' : '') + '">' + (b.example ? 'Пример' : 'Депозит оплачен') + '</span></div>' +
+          '<div class="price">' + money(b.price) + '<button type="button" class="ghost sm" data-cancel="' + esc(b.id) + '">Отменить</button></div></div>';
+      });
+      html += '</section>';
+    });
+    $('#v-vladelec').innerHTML = html;
+  }
+
+  /* ---------- events ---------- */
+  function afterSelChange() { fixSlot(); rSizes(); rSlots(); rSummary(); }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest('button'); if (!t) return;
+    var d = t.dataset;
+    if (d.go) { go(d.go); return; }
+    if (t.id === 'backBtn') { back(); return; }
+    if (d.svc) { sel.service = d.svc; afterSelChange(); return; }
+    if (d.size) { sel.size = d.size; if (cur === 'uslugi') renderUslugi(); else afterSelChange(); return; }
+    if (d.master) { sel.master = d.master; fixSlot(); rMasters(); rSlots(); rSummary(); return; }
+    if (d.day) { sel.day = d.day; sel.slot = null; rDays(); rSlots(); rSummary(); return; }
+    if (d.slot) { sel.slot = Number(d.slot); rSlots(); rSummary(); return; }
+    if (d.pick) { sel.service = d.pick; sel.slot = null; go('zapis'); return; }
+    if (d.pickmaster) { sel.master = d.pickmaster; sel.slot = null; go('zapis'); return; }
+    if (d.promo) { sel.promo = d.promo; go('zapis'); return; }
+    if (d.quick) { var q = d.quick.split('|'); sel.service = 'full'; sel.size = 'm'; sel.extras = {}; sel.day = q[0]; sel.slot = Number(q[1]); sel.master = q[2]; go('zapis'); toast('Время выбрано. Осталось ввести контакты.'); return; }
+    if (d.pet) {
+      var p = account.pets[Number(d.pet)]; if (!p) return;
+      $('#f-dog').value = p.name; $('#f-breed').value = p.breed || ''; sel.size = p.size; afterSelChange(); toast('Данные питомца подставлены'); return;
+    }
+    if (d.cancel) {
+      bookings = bookings.filter(function (b) { return b.id !== d.cancel; }); save();
+      if (cur === 'kabinet') renderCabinet(); else renderOwner();
+      renderChrome(); toast('Запись отменена'); return;
+    }
+    if (d.repeat) {
+      var src = bookings.filter(function (b) { return b.id === d.repeat; })[0]; if (!src) return;
+      var s = SERVICES.filter(function (x) { return x.name === src.service; })[0];
+      if (s) sel.service = s.id;
+      sel.slot = null; sel.extras = {}; go('zapis'); $('#f-dog').value = src.dog; toast('Выберите новую дату и время'); return;
+    }
+    if (d.delpet) { account.pets.splice(Number(d.delpet), 1); save(); renderCabinet(); return; }
+    switch (d.act) {
+      case 'book': book(); break;
+      case 'again': $('#done').hidden = true; $('#booking').hidden = false; ['f-dog', 'f-breed'].forEach(function (id) { $('#' + id).value = ''; }); renderZapis(); break;
+      case 'login': {
+        var n = $('#c-name').value.trim(), c = $('#c-contact').value.trim();
+        if (!n || (c.replace(/\D/g, '').length < 7 && c.indexOf('@') < 1)) { $('#c-err').textContent = 'Введите имя и телефон (минимум 7 цифр) или почту.'; return; }
+        if (account && account.contact === c) { account.name = n; toast('С возвращением, ' + n); }
+        else { account = { name: n, contact: c, points: 200, pets: [] }; toast('Кабинет создан. Начислено 200 баллов.'); }
+        loggedIn = true; save(); renderCabinet(); renderChrome(); break;
+      }
+      case 'logout': loggedIn = false; sel.usePoints = false; save(); renderCabinet(); renderChrome(); toast('Вы вышли из кабинета'); break;
+      case 'addpet': {
+        var pn = $('#p-name').value.trim();
+        if (!pn) { $('#p-err').textContent = 'Укажите кличку питомца.'; return; }
+        account.pets.push({ name: pn, breed: $('#p-breed').value.trim(), size: $('#p-size').value }); save(); renderCabinet(); toast('Питомец добавлен'); break;
+      }
+      case 'review': {
+        var rn = $('#r-name').value.trim(), rt = $('#r-text').value.trim();
+        if (!rn || rt.length < 5) { $('#r-err').textContent = 'Укажите имя и напишите хотя бы пару слов.'; return; }
+        userReviews.unshift({ name: rn, stars: Number($('#r-stars').value), text: rt }); save(); renderInfo(); toast('Спасибо за отзыв!'); break;
+      }
+      case 'msg': {
+        var mn = $('#m-name').value.trim(), mt = $('#m-text').value.trim();
+        if (!mn || mt.length < 3) { $('#m-err').textContent = 'Укажите имя и текст сообщения.'; return; }
+        $('#m-err').textContent = ''; $('#m-name').value = ''; $('#m-text').value = ''; toast('Сообщение отправлено (в демо оно никуда не уходит)'); break;
+      }
+    }
+  });
+  document.addEventListener('change', function (e) {
+    var t = e.target;
+    if (t.dataset && t.dataset.extra) { sel.extras[t.dataset.extra] = t.checked; rSlots(); rSummary(); }
+    else if (t.id === 'f-points') { sel.usePoints = t.checked; rSummary(); }
+  });
+  $('#f-promo').addEventListener('input', function (e) { sel.promo = e.target.value; rSummary(); });
+  document.addEventListener('submit', function (e) { e.preventDefault(); });
+
+  /* ---------- motion: button ripple and fur trail on the hero ---------- */
+  var REDUCE = false;
+  document.addEventListener('pointerdown', function (e) {
+    if (REDUCE) return;
+    var b = e.target.closest('.btn');
+    if (!b || b.disabled) return;
+    var r = b.getBoundingClientRect(), s = Math.max(r.width, r.height) * 2, sp = document.createElement('span');
+    sp.className = 'ripple';
+    sp.style.cssText = 'width:' + s + 'px;height:' + s + 'px;left:' + (e.clientX - r.left - s / 2) + 'px;top:' + (e.clientY - r.top - s / 2) + 'px';
+    b.appendChild(sp);
+    setTimeout(function () { sp.remove(); }, 700);
+  });
+
+  var FUR = {
+    root: ['#5F55B8', '#6A5BC2', '#7B6CD1'],
+    mid: ['#9F90DD', '#A394E2', '#B1A5E8'],
+    tip: ['#D9D1F6', '#E9E4FB', '#F4F1FD']
+  };
+  function furInit(hero) {
+    if (REDUCE || !hero) return;
+    var cv = document.createElement('canvas');
+    cv.className = 'fur'; cv.setAttribute('aria-hidden', 'true');
+    hero.appendChild(cv);
+    var ctx = cv.getContext('2d');
+    if (!ctx) return;
+    var dpr = Math.min(window.devicePixelRatio || 1, 2), W = 0, H = 0, strands = [], last = null, raf = 0, ro = null;
+    function size() {
+      var r = hero.getBoundingClientRect();
+      W = r.width; H = r.height;
+      cv.width = Math.max(1, Math.round(W * dpr)); cv.height = Math.max(1, Math.round(H * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    size();
+    if (window.ResizeObserver) { ro = new ResizeObserver(size); ro.observe(hero); }
+    function spawn(x, y, ang, now) {
+      for (var i = 0; i < 9; i++) {
+        var r = Math.random() * 15, th = Math.random() * 6.2832;
+        strands.push({
+          x: x + Math.cos(th) * r, y: y + Math.sin(th) * r,
+          a: ang + (Math.random() - 0.5) * 1.1 + (Math.random() < 0.5 ? 0.35 : -0.35),
+          len: 26 + Math.random() * 38, w: 0.9 + Math.random() * 1.5,
+          k: (Math.random() * 3) | 0, bend: (Math.random() - 0.3) * 0.5,
+          t0: now + Math.random() * 120, ph: (x + y) * 0.03
+        });
+      }
+      if (strands.length > 1200) strands.splice(0, strands.length - 1200);
+    }
+    function frame(now) {
+      raf = 0;
+      if (!cv.isConnected) { if (ro) ro.disconnect(); return; }
+      ctx.clearRect(0, 0, W, H);
+      ctx.lineCap = 'round';
+      var alive = [];
+      for (var i = 0; i < strands.length; i++) {
+        var s = strands[i], t = now - s.t0;
+        if (t < 0) { alive.push(s); continue; }
+        if (t > 6200) continue;
+        var g = Math.min(1, t / 480); g = 1 - Math.pow(1 - g, 3);
+        var life = t < 3600 ? 1 : 1 - (t - 3600) / 2600;
+        var L = s.len * g * (0.55 + 0.45 * life);
+        var wave = Math.sin(now / 340 - s.ph);
+        var a = s.a + wave * 0.16 * g;
+        var ca = Math.cos(a), sa = Math.sin(a), nx = -sa, ny = ca;
+        var bend = (s.bend + wave * 0.12) * L;
+        var p1x = s.x + ca * L * 0.4 + nx * bend * 0.16, p1y = s.y + sa * L * 0.4 + ny * bend * 0.16;
+        var p2x = s.x + ca * L * 0.75 + nx * bend * 0.5625, p2y = s.y + sa * L * 0.75 + ny * bend * 0.5625;
+        var p3x = s.x + ca * L + nx * bend, p3y = s.y + sa * L + ny * bend;
+        ctx.globalAlpha = Math.max(0, life) * 0.95;
+        ctx.lineWidth = s.w * 1.5; ctx.strokeStyle = FUR.root[s.k];
+        ctx.beginPath(); ctx.moveTo(s.x, s.y); ctx.lineTo(p1x, p1y); ctx.stroke();
+        ctx.lineWidth = s.w * 1.1; ctx.strokeStyle = FUR.mid[s.k];
+        ctx.beginPath(); ctx.moveTo(p1x, p1y); ctx.lineTo(p2x, p2y); ctx.stroke();
+        ctx.lineWidth = s.w * 0.7; ctx.strokeStyle = FUR.tip[s.k];
+        ctx.beginPath(); ctx.moveTo(p2x, p2y); ctx.lineTo(p3x, p3y); ctx.stroke();
+        alive.push(s);
+      }
+      ctx.globalAlpha = 1;
+      strands = alive;
+      if (alive.length) raf = requestAnimationFrame(frame);
+    }
+    hero.addEventListener('pointermove', function (e) {
+      var r = hero.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top, now = performance.now();
+      if (last) {
+        var dx = x - last.x, dy = y - last.y, dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 4) return;
+        var ang = Math.atan2(dy, dx), steps = Math.min(30, Math.max(1, Math.floor(dist / 5)));
+        for (var k = 1; k <= steps; k++) spawn(last.x + dx * k / steps, last.y + dy * k / steps, ang, now);
+      }
+      last = { x: x, y: y };
+      if (!raf) raf = requestAnimationFrame(frame);
+    });
+    hero.addEventListener('pointerleave', function () { last = null; });
+  }
+
+  /* ---------- start: keep Back inside the site ---------- */
+  var start = fromHash();
+  try {
+    history.replaceState({ guard: true }, '', location.href);
+    history.pushState({ v: start }, '', '#' + start);
+    histOk = true;
+  } catch (e) { histOk = false; }
+  show(start);
+})();
+</script>
+
+</body></html>
